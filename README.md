@@ -1,8 +1,6 @@
 # AttendanceMonitor-Barrett-Thesis-Prezenta
 
-#######################################
 # Setting up Project to local machine #
-#######################################
 
 1. Install XAMPP package from https://www.apachefriends.org/download.html,
    When install is complete,
@@ -15,9 +13,7 @@
 7. Locate folder "htdocs", copy the extracted "php" folder from step 5 to the "htdocs" folder.
 8. Load http://localhost/php/Prezenta/public/ in a browser on your machine to start the web application.
 
-####################
 # Using the System #
-####################
 
 1. Start the XAMPP manager application, and make sure to start the three servers: MySQL Database, Apache Web Server, and PROFTPD.
 2.Load web application by loading http://localhost/php/Prezenta/public/ in your browser
@@ -31,3 +27,7 @@
 9. Go back to the web app, and click "End session"
 10. Close the java application
 11. Switch off, and unplug the device.
+
+
+
+*Last Revised: August 20, 2018* 
