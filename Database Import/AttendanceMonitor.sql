@@ -61,7 +61,7 @@ CREATE TABLE `logs` (
   `studid` varchar(20) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
-  `session` varchar(20) NOT NULL,
+  `session` varchar(60) NOT NULL,
   `owner` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
@@ -89,7 +89,7 @@ CREATE TABLE `sessionsLogs` (
   `date` date NOT NULL,
   `starttime` time NOT NULL,
   `endtime` time NOT NULL,
-  `owner` varchar(30) NOT NULL,
+  `owner` varchar(60) NOT NULL,
   `session` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
@@ -106,7 +106,7 @@ CREATE TABLE `students` (
   `owner` varchar(60) NOT NULL,
   `lastname` varchar(60) NOT NULL,
   `firstname` varchar(600) NOT NULL,
-  `asurite` varchar(20) NOT NULL
+  `asurite` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- --------------------------------------------------------
@@ -118,8 +118,8 @@ CREATE TABLE `students` (
 CREATE TABLE `users` (
   `id` int(10) NOT NULL,
   `userkey` varchar(255) NOT NULL,
-  `email` varchar(20) NOT NULL,
-  `username` varchar(20) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  `username` varchar(60) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
