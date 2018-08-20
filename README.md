@@ -25,7 +25,7 @@
 8. Click "Connect" on the java application to start students check-in
 
 **Note:**
-   For **Windows Users** make sure you select the right port for your FTDI cable in the java application.
+   For **Windows Users** make sure to select the right port for your FTDI cable in the java application.
    
  Once all students have checked in,
 9. Go back to the web app, and click "End session"
