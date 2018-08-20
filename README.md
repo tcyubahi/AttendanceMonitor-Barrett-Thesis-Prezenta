@@ -5,7 +5,7 @@
 1. Install XAMPP package from https://www.apachefriends.org/download.html,
    When install is complete,
 2. Open the XAMPP manager application, and run MySQL Database, Apache Web Server, and PROFTPD.
-   When all the three servers are running, click on "Go To Application"
+   When all the three servers are running, click on "Go To Application", and click on "phpMyAdmin" in the top right-corner
 3. Add a new database titled "AttendanceMonitor"
 4. Import file from folder "Database Import" into the newly created database to generate tables for the app.
 5. Unzip file php.zip from folder "Web App" to local machine
