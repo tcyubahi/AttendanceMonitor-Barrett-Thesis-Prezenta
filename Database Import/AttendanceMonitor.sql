@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 20, 2018 at 04:40 AM
+-- Generation Time: Aug 30, 2018 at 07:23 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -30,9 +30,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `activeSession` (
   `id` int(11) NOT NULL,
-  `session` varchar(60) NOT NULL,
-  `owner` varchar(60) NOT NULL,
-  `time` time NOT NULL,
+  `session` varchar(120) NOT NULL,
+  `owner` varchar(120) NOT NULL,
+  `starttime` time NOT NULL,
+  `endtime` time NOT NULL,
   `date` date NOT NULL,
   `activated` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
@@ -49,7 +50,6 @@ CREATE TABLE `addAttendee` (
   `time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
-
 -- --------------------------------------------------------
 
 --
@@ -61,8 +61,8 @@ CREATE TABLE `logs` (
   `studid` varchar(20) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
-  `session` varchar(60) NOT NULL,
-  `owner` varchar(60) NOT NULL
+  `session` varchar(120) NOT NULL,
+  `owner` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- --------------------------------------------------------
@@ -73,8 +73,8 @@ CREATE TABLE `logs` (
 
 CREATE TABLE `sessions` (
   `id` int(20) NOT NULL,
-  `title` varchar(60) NOT NULL,
-  `owner` varchar(60) NOT NULL,
+  `title` varchar(120) NOT NULL,
+  `owner` varchar(120) NOT NULL,
   `count` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
@@ -89,8 +89,8 @@ CREATE TABLE `sessionsLogs` (
   `date` date NOT NULL,
   `starttime` time NOT NULL,
   `endtime` time NOT NULL,
-  `owner` varchar(60) NOT NULL,
-  `session` varchar(60) DEFAULT NULL
+  `owner` varchar(120) NOT NULL,
+  `session` varchar(120) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- --------------------------------------------------------
@@ -102,10 +102,10 @@ CREATE TABLE `sessionsLogs` (
 CREATE TABLE `students` (
   `id` int(10) NOT NULL,
   `studid` varchar(20) NOT NULL,
-  `session` varchar(60) NOT NULL,
-  `owner` varchar(60) NOT NULL,
-  `lastname` varchar(60) NOT NULL,
-  `firstname` varchar(60) NOT NULL,
+  `session` varchar(120) NOT NULL,
+  `owner` varchar(120) NOT NULL,
+  `lastname` varchar(120) NOT NULL,
+  `firstname` varchar(120) NOT NULL,
   `asurite` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
@@ -118,8 +118,8 @@ CREATE TABLE `students` (
 CREATE TABLE `users` (
   `id` int(10) NOT NULL,
   `userkey` varchar(255) NOT NULL,
-  `email` varchar(60) NOT NULL,
-  `username` varchar(60) NOT NULL,
+  `email` varchar(120) NOT NULL,
+  `username` varchar(120) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
