@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 30, 2018 at 07:23 PM
+-- Generation Time: Sep 03, 2018 at 09:12 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -161,7 +161,6 @@ ALTER TABLE `sessionsLogs`
 ALTER TABLE `students`
   ADD PRIMARY KEY (`studid`,`session`,`owner`),
   ADD UNIQUE KEY `id` (`id`),
-  ADD UNIQUE KEY `asurite` (`asurite`),
   ADD KEY `session` (`session`),
   ADD KEY `owner` (`owner`);
 
