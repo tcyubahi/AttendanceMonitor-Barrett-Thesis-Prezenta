@@ -2,7 +2,7 @@
 
 # Setting up Project to local machine #
 
-1. Install the XAMPP package (**version 5.6.7**) from https://www.apachefriends.org/download.html,
+1. Install the XAMPP package (**version 5.6.37**) from https://www.apachefriends.org/download.html,
    When install is complete,
 2. Open the XAMPP manager application, and run MySQL Database, Apache Web Server, and PROFTPD.
    When all the three servers are running, click on "Go To Application" (MAC OSX) or Load "http://localhost" (Windows), and click on "phpMyAdmin" in the top right-corner
