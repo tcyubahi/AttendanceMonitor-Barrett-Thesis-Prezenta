@@ -22,10 +22,13 @@
 5. Switch on the device
 6. Connect the FTDI Cable from the device to your computer
 7. Run the "JavaTool" jar on your local machine
-8. Click "Connect" on the java application to start students check-in
+   It will automatically connect to the web app and device, and wait around for either a session check-in or student               
+   registration.  
 
 **Note:**
    For **Windows Users** make sure to select the right port for your FTDI cable in the java application.
+   
+8. If running a session check-in, go to the web app and click "Start Session" for a class
    
  Once all students have checked in,
 9. Go back to the web app, and click "End session"
@@ -34,4 +37,4 @@
 
 
 
-*Last Revised: August 20, 2018* 
+*Last Revised: September 24, 2018* 
