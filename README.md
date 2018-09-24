@@ -31,6 +31,7 @@
 8. If running a session check-in, go to the web app and click "Start Session" for a class
    
  Once all students have checked in,
+ 
 9. Go back to the web app, and click "End session"
 10. Close the java application
 11. Switch off, and unplug the device.
