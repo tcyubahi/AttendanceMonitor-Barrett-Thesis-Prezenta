@@ -1,0 +1,252 @@
+<!-- 
+	AUTHOR: TRESOR CYUBAHIRO
+-->
+<!DOCTYPE html charset="utf-8">
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><?php echo $title ?> - Logs</title>
+	<link rel="icon" href="images/logo.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+  		integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+  		crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</head>
+<body  ng-app="attendanceApp" ng-controller="Logs" ng-init="sessionTitle='<?php echo $title ?>'">
+	<div class="" style="background-color: rgba(0,0,0,.2); margin: 0px!important; width: 100%!important;height: 100%!important;position: fixed;top: 0; left:0; right: 0; bottom: 0; z-index: 2; display: table;" ng-show="showLoader">
+		<div class="loader">
+		</div>
+	</div>
+
+	<div class="pull-left">
+		<img src="images/Tick-logo.png" height="150" width="150">
+	</div>
+
+		<div class="dropdown-menu-right" style="float: right;">
+	  <button type="button" class="btn btn-default dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: transparent;cursor: pointer;color: #161616;">
+	      <i class="fa fa-cogs" style="font-size: 30px;" aria-hidden="true"></i>
+	  </button>
+	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="border-radius: 0!important;background-color: #558C89;!important; border: none!important;padding: 40px;">
+	    <button ng-click="goBack()" class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;"><i class="fa fa-home" aria-hidden="true"></i> Home </button>
+	    <a class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;" ng-click="goToAddAttendees()"><i class="fa fa-book" aria-hidden="true"></i> Add Students</a>
+	    <a class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;" ng-click="goToReports()"><i class="fa fa-database" aria-hidden="true"></i> Students Reports</a>
+	    <a class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+	  </div>
+	</div>
+
+	<div class="container" style="padding-top: 45px; margin-bottom: 100px;">
+		<div class="pull-left">
+			<h3 style="color: #161616;"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{date | date:'MM.dd.yyyy'}}</h3>
+		</div>
+
+		<div class="pull-right">
+			<h2 style="color: #558C89;font-weight: bold;"><?php echo $title ?></h2>
+		</div>
+
+		<div class="clearfix">
+			
+		</div>
+		<p></br></p>
+		<h2 style="font-weight: bold;color: #558C89;">Logs</h2>
+		<p></br></p>
+
+		<div id="allLogs">
+			<p ng-show="sessionLogs.length == 0" style="text-align: center;"><small style="font-size: 13px;">This class has no logs yet</small></p>
+			<div class="logsElement" ng-repeat="session in sessionLogs track by $index">
+				<div class="row">
+					<div class="col-md-2 col-lg-2">
+						<button ng-click="deleteLog(session)" style="background-color: transparent;" class="btn">
+							<i class="fa fa-trash" aria-hidden="true" style="color: #558C89;"></i>
+						</button>
+					</div>
+					<div class="col-md-8 col-lg-8" style="text-align: center; color: #161616;font-weight: bold;font-size: 18px;">
+						{{session.date}}&nbsp;&nbsp;<span style=""><small>{{session.time}}</small>
+						</span>
+					</div>
+					<div class="col-md-2 col-lg-2">
+						<button ng-click="viewLog(session)" style="background-color: transparent;" class="btn pull-right">
+							<i class="fa fa-chevron-right" aria-hidden="true" style="color: #558C89;font-size: 30px;"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Reports Modal -->
+<div  class="modal fade" id="reportsModal" tabindex="-1" role="dialog" aria-labelledby="reportsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="reportsModalLabel">Reports</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+			<div class="row" ng-show="attendeeData.length != 0">
+				<div class="col-lg-6 col-md-6">
+
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<button type="button" class="btn btn-secondary pull-right" style="cursor: pointer;" ng-click="printPDF('oneReport')"><i class="fa fa-print" aria-hidden="true"></i></button>
+				</div>
+			</div>
+			<div class="row" id="oneReport" style="padding-top: 40px; padding-right: 15px; padding-left: 15px;">
+				<div class="col-lg-4 col-md-4">
+					<p style="text-align: center; color: #161616;font-weight: bold;">{{attendeeFirstName}}&nbsp;{{attendeeLastName}}</br>{{attendeeID}}</p>
+				</div>
+				<div class="col-lg-8 col-md-8">
+					<p style="font-size: 12px;margin-top: 15px;" ng-show="attendeeData.length == 0">There currently are no logs for this attendee</p>
+					<div class="row" ng-repeat="session in attendeeData">
+						<div class="col-md-6 col-lg-6" style="border-bottom: 1px solid #DCDCDC; text-align: center; color: #161616;font-weight: bold;">
+							{{session.date}}&nbsp;&nbsp;<span style=""><small>{{session.time}}</small></span>
+						</div>
+						<div class="col-md-6 col-lg-6">
+							<i class="fa fa-check" aria-hidden="true" style="color: #558C89;"></i>
+						</div>
+					</div>
+		
+					<p></br></br></p>
+					<center style="font-size: 10px;">
+						<img src="images/Tick-logo.png" height="30" width="30">
+						<p><small>&copy; Prezenta Reports - {{date | date:'MM.dd.yyyy'}}</small></p>
+					</center>
+				</div>
+			</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+	<!-- Logs Modal -->
+<div  class="modal fade" id="logsModal" tabindex="-1" role="dialog" aria-labelledby="reportsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="reportsModalLabel">{{selectedSession.date}} <span style="font-size: 13px;">{{selectedSession.time}}</span></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<div class="row" ng-show="students.length != 0">
+      		<div class="col-lg-12 col-md-12">	
+      			<button type="button" class="btn btn-secondary pull-right" style="cursor: pointer; float: right;" ng-click="printPDF('oneLog')"><i class="fa fa-print" aria-hidden="true"></i></button>
+      		</div>
+      	</div>
+			<div class="row" id="oneLog" style="padding-right: 15px; padding-left: 15px;">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<p style="font-size: 13px; font-style: italic;">
+						Session: <span style="font-weight: lighter; font-size: 18px; font-style: normal;">{{selectedSession.session}}</span>
+						<br>
+						Date: <span style="font-weight: lighter;font-size: 18px; font-style: normal;">{{selectedSession.date}}</span>
+						<br>
+						Time: <span style="font-weight: lighter;font-size: 18px; font-style: normal;">{{selectedSession.starttime}}</span>
+						<br>
+						Attendees: <span style="font-weight: lighter; font-size: 18px; font-style: normal;">{{students.length}}</span>
+					</p>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12">
+				<center ng-show="students.length == 0"><small>No check-ins during this session</small></center>
+			<table class="table table-striped w2-card" id="sessionLogAttendees" ng-show="students.length != 0">
+			    <tbody>
+			    	<thead>
+						<th style="width: 25%;font-weight: bold; font-size: 14px;">ID</th>
+						<th style="width: 5%;font-weight: bold; font-size: 14px;">ASURITE</th>
+						<th style="width: 25%;font-weight: bold; font-size: 14px;">First Name</th>
+						<th style="width: 25%;font-weight: bold; font-size: 14px;">Last Name</th>
+						<th style="width: 10%;font-weight: bold; font-size: 14px;">Time</th>
+					</thead>
+			      <tr ng-repeat="student in students track by $index">
+			        <td>{{student.studid}}</td>
+			        <td>{{student.asurite}}</td>
+			        <td>{{student.firstname}}</td>
+			        <td>{{student.lastname}}</td>
+			        <td>{{student.time}}</td>
+			      </tr>
+			    </tbody>
+			    <!--<tfoot valign="bottom">
+			    	<tr>
+			    		<td style="border-top: none;" colspan="6">
+			    			<p style="text-align: center;"><br><br><small style="font-size: 10px;">&copy; Prezenta Reports - {{date | date:'MM.dd.yyyy'}}</small></p>
+			    		</td>
+			    	</tr>
+			    </tfoot>-->
+		  	</table>
+				</div>
+			</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	<!-- DELETE Session Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog customMd" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="exampleModalLabel">Log {{selectedLog.date}}</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style=""><small style="font-size: 16px;">Are you sure? You cannot undo this action</small>. All data from this log will be deleted.</p>
+        <p>
+        	<input type="password" ng-model="deletePassword" class="form-control" placeholder="Password">
+        	<small class="form-text text-muted">Enter your password to perform action</small>
+        </p>
+        <div class="loader1 pull-right" ng-show="showDeleteLoader">
+		</div>
+      </div>
+
+      	<div style="width: 100%;">
+      		<div style="width: 50%; float: left;">
+        		<button  data-dismiss="modal" type="button" class="custom-btn pull-left" style="width: 100%; background-color: #558C89; border-color: #558C89; color: #FFF;">Close</button>
+        	</div>
+        	<div style="width: 50%; float: right;">
+        		<button ng-click="confirmLogDelete()" type="button" class="custom-btn pull-right" style="width: 100%; background-color: #D9853C; border-color: #D9853C;">Delete</button>
+        	</div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="backButton">
+<button data-toggle="tooltip" data-placement="right" title="<?php echo $title ?> Dashboard" class="btn" style="background-color: transparent;" ng-click="goBack()"><i style="font-weight: lighter;font-size: 50px; color: #558C89;" class="fa fa-chevron-left" aria-hidden="true"></i></button>	
+</div>
+
+
+</body>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.tpls.js"></script>
+	<script src="js/html2canvas.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+	<script src="js/attendance.js"></script>
+</html>

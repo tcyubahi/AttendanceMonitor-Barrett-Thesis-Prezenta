@@ -1,0 +1,231 @@
+<!-- 
+	AUTHOR: TRESOR CYUBAHIRO
+-->
+<!DOCTYPE html charset="utf-8">
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome - Prezenta</title>
+	<link rel="icon" href="images/logo.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style-login.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+  		integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+  		crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+</head>
+<body  ng-app="attendanceApp" ng-controller="Login">
+	<div class="" style="background-color: rgba(0,0,0,.2); margin: 0px!important; width: 100%!important;height: 100%!important;position: fixed;top: 0; left:0; right: 0; bottom: 0; z-index: 2; display: table;" ng-show="showLoader">
+		<div class="loader">
+		</div>
+	</div>
+	<div class="pull-left">
+		<img src="images/Tick-logo.png" height="150" width="150" class="animated bounceIn">
+	</div>
+	<div class="container login">
+		<div class="forLogin animated bounceIn" id="forLogin" ng-show="showLogin">
+			<div class="row">
+				<div class="col-lg-12 col-md-12">
+					<h2 style="text-align: center;margin-right: 50px;margin-bottom: 45px;color: grey;">Login</h2>
+					<form  style="padding-right: 50px;">
+					  	<div class="input-group mb-3">
+					  		<div class="input-group-prepend">
+        						<span style="width: 200px;" class="input-group-text">User name</span>
+        					</div>
+					    	<input type="text" style="border-right: none;" class="form-control" id="username" ng-model="username" required>
+					  	</div>
+					  	<div class="input-group mb-3">
+							<div class="input-group-prepend">
+        						<span style="width: 200px;" class="input-group-text">Password</span>
+        					</div>
+					    	<input type="password" style="border-right: none;"  class="form-control" id="password" ng-model="password" required>
+					    	<div class="input-group-append">
+    							<span style="background-color: #FFF;border-left: none!important;" class="input-group-text" id="basic-addon2">
+    								<a ng-click="$event.preventDefault();forgot()" style="color: #D9853C;">
+    									<i data-toggle="tooltip" data-placement="top" title="Forgot password?" class="fa fa-question-circle-o" aria-hidden="true"></i>
+    								</a>
+    							</span>
+  							</div>
+					  	</div>
+					</form>
+			        <button type="submit" ng-click="login()" class="custom-btn pull-right" style="width: 50%; background-color: #558C89; border-color: #558C89; margin-top: 40px;"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
+	        	</div>
+        	</div>
+		</div>
+		<div>
+			<p style="font-weight: lighter;margin-top: 40px;font-size: 14px;text-align: center;" class="animated bounceIn">New here? <span style="font-size: 16px; font-weight: bold; text-decoration: underline; color: #D9853C;cursor: pointer;" data-toggle="modal" data-target="#addUserModal">Get Started</span></p>
+		</div>
+	</div>
+
+<!-- SignUp Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="exampleModalLabel">Sign Up</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="pull-left"><small>All fields are required. Press <span style="color: #D9853C;">Complete</span>, to complete sign up.</small></p>
+        <div class="loader1 pull-right" ng-show="showSignUpLoader">
+		</div>
+        <form>
+		  <div class="input-group mb-3">
+		  	<div class="input-group-prepend">
+        		<span style="width: 200px;" class="input-group-text" id="email">Email</span>
+        	</div>
+		    <input type="email" class="form-control" ng-model="signUpEmail">
+		  </div>
+		  <div class="input-group mb-3">
+		  	<div class="input-group-prepend">
+        		<span style="width: 200px;" class="input-group-text" id="username">User Name</span>
+        	</div>
+		    <input type="text" class="form-control" ng-model="signUpUserName">
+		  </div>
+		  <div class="input-group mb-3">
+		  	<div class="input-group-prepend">
+        		<span style="width: 200px;" class="input-group-text" id="password">Password</span>
+        	</div>
+		    <input type="password" class="form-control" ng-model="signUpPassword" >
+		  </div>
+		  <div class="input-group mb-3">
+		  	<div class="input-group-prepend">
+        		<span style="width: 200px;" class="input-group-text" id="confirm">Confirm Password</span>
+        	</div>
+		    <input type="password" class="form-control" ng-model="signUpConfirmPassword" >
+		  </div>
+		</form>
+      </div>
+
+      	<div style="width: 100%;">
+      		<div style="width: 50%; float: left;">
+        		<button data-dismiss="modal" type="button" class="custom-btn pull-left" style="width: 100%; background-color: #558C89; border-color: #558C89; color: #FFF;border-radius: 0px;">Close</button>
+        	</div>
+        	<div style="width: 50%; float: right;">
+        		<button ng-click="signUp()" class="custom-btn pull-right" style="width: 100%; background-color: #D9853C; border-color: #D9853C;border-radius: 0px;">Complete</button>
+        	</div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- END OF SIGNUP MODAL -->
+
+<!-- FORGOT MODAL -->
+<div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="exampleModalLabel">Account Recovery</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="pull-left"><small>Type your email and click <span style="color: #D9853C;">Recover</span>.</small></p>
+        <div class="loader1 pull-right" ng-show="showSignUpLoader">
+		</div>
+        <form>
+		  <div class="input-group mb-3">
+		  	<div class="input-group-prepend">
+        		<span style="width: 200px;" class="input-group-text" id="email">Email</span>
+        	</div>
+		    <input type="email" class="form-control" ng-model="forgotEmail">
+		  </div>
+		</form>
+      </div>
+
+      	<div style="width: 100%;">
+      		<div style="width: 50%; float: left;">
+        		<button data-dismiss="modal" type="button" class="custom-btn pull-left" style="width: 100%; background-color: #558C89; border-color: #558C89; color: #FFF;border-radius: 0px;">Close</button>
+        	</div>
+        	<div style="width: 50%; float: right;">
+        		<button ng-click="AccRecover()" class="custom-btn pull-right" style="width: 100%; background-color: #D9853C; border-color: #D9853C;border-radius: 0px;">Recover</button>
+        	</div>
+        </div>
+
+    </div>
+  </div>
+</div>
+<!-- END OF FORGOT MODAL -->
+
+
+<!-- RESET MODAL -->
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="exampleModalLabel">Credential reset</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p><small>User name: </small><span style="color: #558C89;">{{tempUsername}}</span></p>
+        <p><small>Temporary password:</small> <span style="color: #558C89;">{{tempPass}}</span></p>
+        <p><small>Be sure to set a new password after login </small></p>
+        <div class="loader1 pull-right" ng-show="showSignUpLoader">
+		</div>
+      </div>
+
+      	<div style="width: 100%;">
+      		<div style="width: 50%; float: left;">
+
+        	</div>
+        	<div style="width: 50%; float: right;">
+        		<button data-dismiss="modal" type="button" class="custom-btn pull-right" style="width: 100%; background-color: #558C89; border-color: #558C89; color: #FFF;border-radius: 0px;">Close</button>
+        	</div>
+        </div>
+
+    </div>
+  </div>
+</div>
+<!-- END OF RESET MODAL -->
+
+<div class="footer">
+	<div class="row">
+		<div class="col-lg-4 col-md-4 col-xs-12">
+			
+		</div>
+		<div class="col-lg-4 col-md-4 col-xs-12">
+			<p>&copy; <small>Prezenta 2018</small></p>
+		</div>
+		<div class="col-lg-4 col-md-4 col-xs-12">
+			<p style="text-align: right; padding-right: 10px;">
+				<i style="color: #D9853C;" class="fa fa-exclamation-circle" aria-hidden="true"></i>
+				<small data-toggle="tooltip" data-placement="top" title="We use cookies in order to maintain a persistent state accross the application and keep your data in sync." style="cursor: pointer;">This site uses cookies</small></p>
+		</div>
+	</div>
+</div>
+
+	<div class="overlay" id="cookieOverlay" ng-show="cookiesDisabled">
+	<div class="pull-left">
+		<img src="images/Tick-logo.png" height="150" width="150" class="animated bounceIn">
+	</div>
+		<div style="padding-top: 300px;">
+			<p style="text-align: center; color: #D9853C;">
+				This site uses cookies, and it seems your cookies are disabled :( <br/> Please enable cookies and reload to continue.<br/><br/>
+				<button class="btn btn-primary" ng-click="checkCookies()" style="background-color: #558C89; border-color: #558C89;">Reload</button>
+			</p>
+		</div>
+	</div>
+</body>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.tpls.js"></script>
+	<script src="js/attendance.js"></script>
+</html>

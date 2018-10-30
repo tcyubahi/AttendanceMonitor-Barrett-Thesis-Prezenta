@@ -1,0 +1,159 @@
+<!-- 
+	AUTHOR: TRESOR CYUBAHIRO
+-->
+<!DOCTYPE html charset="utf-8">
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Prezenta - <?php echo $username ?></title>
+	<link rel="icon" href="images/logo.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+  		integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+  		crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</head>
+<body  ng-app="attendanceApp" ng-controller="Landing">
+	<div class="" style="background-color: rgba(255, 255, 255, 1); margin: 0px!important; width: 100%!important;height: 100%!important;position: fixed;top: 0; left:0; right: 0; bottom: 0; z-index: 2; display: table;" ng-show="showLoader">
+		<div class="loader">
+		</div>
+	</div>
+	<div class="pull-left">
+		<img src="images/Tick-logo.png" height="150" width="150">
+	</div>
+	<div class="dropdown-menu-right" style="float: right;">
+	  <button type="button" class="btn btn-default dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: transparent;cursor: pointer;color: #161616;">
+	      <i class="fa fa-cogs" style="font-size: 30px;" aria-hidden="true"></i>
+	  </button>
+	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="border-radius: 0!important;background-color: transparent!important; border: none!important;">
+	  		<p style="text-align: center;">
+	  		  	<strong><?php echo $username ?></strong>
+	  		  		<br>
+	  		  	<small><?php echo $email ?></small>
+	  		 </p>
+	  	<a class="dropdown-item" style="cursor: pointer; color: #000; font-weight: bold;text-align: center;" data-toggle="modal" data-target="#accountModal"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Account</a>
+	    <a class="dropdown-item" style="cursor: pointer; color: #000; font-weight: bold;text-align: center;" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+	  </div>
+	</div>
+	<div class="container" style="padding-top: 45px;">
+		<h3 style="color: #161616;"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{date | date:'MM.dd.yyyy'}}</h3>
+		<p></br></p>
+		<div class="row" style="vertical-align: middle; align-items: center;margin-top: 80px;">
+			<div class="col-lg-4 col-md-4 col-sm-12 animated bounceIn" style="margin-bottom: 30px; align-content: center;justify-content: center;" ng-repeat="session in sessions track by $index">
+				<button ng-click="goToSession(session.title)" class="btn classBlock" style="height: 200px; width: 200px; background-color: #558C89; font-size: 1.5em;color: #FFF; font-weight: bold;overflow: hidden; white-space: normal;word-wrap: break-word;">
+					{{session.title}}
+				</button>
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-12 animated bounceIn" style="margin-bottom: 30px;">
+				<button data-toggle="modal" data-target="#addSessionModal" class="btn classBlock" style="height: 200px; width: 200px; background-color: rgba(0,0,0,.1); font-size: 50px;color: #FFF; font-weight: bold;">
+					<i class="fa fa-plus" aria-hidden="true"></i>
+				</button>
+			</div>
+		</div>
+		<p></p>
+	</div>
+
+<!-- Add Session Modal -->
+<div class="modal fade" id="addSessionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog customMd" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="exampleModalLabel">Add a session/class</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="pull-left"><small>Provide a unique title for new session/class</small></p>
+        <div class="loader1 pull-right" ng-show="showNewSessionLoader">
+		</div>
+        <form>
+		  <div class="form-group">
+		    <input type="text" class="form-control" ng-model="newSessiontitle" placeholder="Title">
+		  </div>
+		</form>
+      </div>
+
+      	<div style="width: 100%;">
+      		<div style="width: 50%; float: left;">
+        		<button data-dismiss="modal" type="button" class="custom-btn pull-left" style="width: 100%; background-color: #558C89; border-color: #558C89; color: #FFF;border-radius: 0px;">Close</button>
+        	</div>
+        	<div style="width: 50%; float: right;">
+        		<button ng-click="addSession()" class="custom-btn pull-right" style="width: 100%; background-color: #D9853C; border-color: #D9853C;border-radius: 0px;">Add</button>
+        	</div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Account Modal -->
+<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog customMd" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="color: #FFF;background-color: #558C89;">
+        <h3 class="modal-title" id="exampleModalLabel">My Account</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: 1px solid #000; border-radius: 100%; padding: 2px; margin-right: .25px; margin-top: .25px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="pull-left"><small>Click <span style="color: #D9853C;">Save</span>, to save changes.</small>.</p>
+        <div class="loader1 pull-right" ng-show="showReadIDLoader">
+		</div>
+        <form>
+		  <div class="form-group">
+		    <input type="email" disabled="disabled" value="<?php echo $email ?>" class="form-control" placeholder="Email">
+		  </div>
+		  <div class="form-group">
+		    <input type="text" ng-init="username='<?php echo $username ?>'" value="<?php echo $username ?>" class="form-control" placeholder="User Name" ng-model="username">
+		  </div>
+		  <div class="form-group">
+		    <input type="password" class="form-control" placeholder="Password" ng-model="password">
+		     <small id="emailHelp" class="form-text text-muted">Enter your current password to save changes</small>
+		  </div>
+		  <div class="form-group" ng-show="!setNewPassword">
+		    <a ng-click="showNewPassword()" style="text-decoration: underline; color: #D9853C;cursor: pointer;"><small>Set New Password</small></a>
+		  </div>
+		  <div class="form-group" ng-show="setNewPassword">
+		    <a href="" ng-click="hideNewPassword()" style="text-decoration: underline; color: #D9853C;cursor: pointer;"><small>Cancel Password Update</small></a>
+		  </div>
+		  		<div class="form-group animated" ng-show="setNewPassword" id="newPassword">
+		   			<input type="password" class="form-control" ng-model="newPassword" placeholder="New Password">
+		  		</div>
+		  		<div class="form-group animated" ng-show="setNewPassword" id="newConfirmPassword">
+		    		<input type="password" class="form-control" placeholder="Confirm New Password" ng-model="newConfirmPassword">
+		  		</div>
+		</form>
+      </div>
+
+      	<div style="width: 100%;">
+      		<div style="width: 50%; float: left;">
+        		<button ng-click="closeAccount()" type="button" class="custom-btn pull-left" style="width: 100%; background-color: #558C89; border-color: #558C89; color: #FFF;border-radius: 0px;">Close</button>
+        	</div>
+        	<div style="width: 50%; float: right;">
+        		<button ng-click="updateAccount()" class="custom-btn pull-right" style="width: 100%; background-color: #D9853C; border-color: #D9853C;border-radius: 0px;">Save</button>
+        	</div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.tpls.js"></script>
+	<script src="js/html2canvas.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+	<script src="js/attendance.js"></script>
+</html>

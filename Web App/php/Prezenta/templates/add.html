@@ -1,0 +1,150 @@
+<!-- 
+	AUTHOR: TRESOR CYUBAHIRO
+-->
+<!DOCTYPE html charset="utf-8">
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><?php echo $username ?> - Prezenta</title>
+	<link rel="icon" href="images/logo.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+  		integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+  		crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<style type="text/css">
+		input {
+			text-align: center;
+		}
+	</style>
+</head>
+<body  ng-app="attendanceApp" ng-controller="Add">
+	<div class="" style="background-color: rgba(0,0,0,.2); margin: 0px!important; width: 100%!important;height: 100%!important;position: fixed;top: 0; left:0; right: 0; bottom: 0; z-index: 2; display: table;" ng-show="showLoader">
+		<div class="loader">
+		</div>
+	</div>
+	
+	<div class="pull-left">
+		<img src="images/Tick-logo.png" height="150" width="150">
+	</div>
+
+	<div class="dropdown-menu-right" style="float: right;">
+	  <button type="button" class="btn btn-default dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: transparent;cursor: pointer;color: #161616;">
+	      <i class="fa fa-cogs" style="font-size: 30px;" aria-hidden="true"></i>
+	  </button>
+	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="border-radius: 0!important;background-color: #558C89;!important; border: none!important;padding: 40px;">
+	    <button ng-click="goBack()" class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;"><i class="fa fa-home" aria-hidden="true"></i> Home </button>
+	    <a class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;" ng-click="goToLogs()"><i class="fa fa-book" aria-hidden="true"></i> Class Logs</a>
+	    <a class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;" ng-click="goToReports()"><i class="fa fa-database" aria-hidden="true"></i> Students Reports</a>
+	    <a class="dropdown-item" style="cursor: pointer; color: #FFF; font-weight: bold;" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+	  </div>
+	</div>
+
+	<div class="container" style="padding-top: 45px; margin-bottom: 100px;">
+
+		<div class="pull-left">
+			<h3 style="color: #161616;"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{date | date:'MM.dd.yyyy'}}</h3>
+		</div>
+
+		<div class="pull-right">
+			<h2 style="color: #558C89;font-weight: bold;"><?php echo $title ?></h2>
+		</div>
+
+		<div class="clearfix">
+			
+		</div>
+		
+		<p></br></p>
+		<p></br></p>
+		<div ng-hide="doneUpload">
+		<div ng-show="uploadFile">
+			<p class=""><small>Locate the <span style="color: #558C89;">CSV</span> file containing attendees' names and asurite IDs</small></p>
+        	<div class="loader1" ng-show="showAddAttendeeLoader">
+			</div>
+        	<form>
+				<div class="form-group">
+		    		<input type="file" class="form-control" id="csvFile" aria-describedby="Choose a file" ng-model="jsonFile" accept=".csv">
+				</div>
+			</form>
+			<output id="selectCSVFile"></output>
+		    <div style="width: 100%;">
+      			<div style="width: 50%; float: left;">
+
+        		</div>
+        		<div style="">
+        			<button ng-click="upload()" class="btn custom-btn pull-right" style=" background-color: #D9853C; border-color: #D9853C;">Upload</button>
+        		</div>
+        	</div>
+        </div>
+        <div ng-hide="uploadFile">
+        	<p style="font-style: italic;text-align: center;font-size: 24px;"><span style="font-weight: bold;color: #D9853C;">{{currentAttendeePos}}</span> of <span style="color: #558C89;">{{csvFileData.length - 1}}</span></p>
+        	<p><br></p>
+        	<div class="row">
+        		<div class="col-lg-3 col-md-3">
+        			
+        		</div>
+        		<div class="col-lg-6 col-md-6">
+        			<form>
+        				<div class="form-group">
+        					<input type="text" class="form-control" id="firstName" aria-describedby="First Name" ng-model="currentAttendeeData.firstName" disabled="disabled">
+        				</div>
+        				<div class="form-group">
+        					<input type="text" class="form-control" id="lastName" aria-describedby="Last Name" ng-model="currentAttendeeData.lastName" disabled="disabled">
+        				</div>
+        				<div class="form-group">
+        					<input type="text" class="form-control" id="asurite" aria-describedby="ASURITE" ng-model="currentAttendeeData.asurite" disabled="disabled">
+        				</div>
+        				<div class="form-group">
+        					<div class="row">
+        						<div class="col-lg-8">
+        							<input type="text" class="form-control" id="idNumber" aria-describedby="ID Number" ng-model="currentAttendeeData.idNumber" disabled="disabled">
+        						</div>
+        						<div class="col-lg-4">
+        							<button ng-click="readNewID()" class="btn custom-btn" style="background-color: #D9853C; border-color: #D9853C; width: 100%;">Get ID</button>
+        						</div>
+        					</div>
+        					<center><p><br><small>In case of an error, click <span style="color: #D9853C;">Get ID</span> to retry reading ID</small></p></center>
+        				</div>
+        			</form>
+        		</div>
+        		<div class="col-lg-3 col-md-3">
+        			<div class="loader1 pull-left" ng-show="showReadIDLoader">
+        		</div>
+        	</div>
+        </div>
+        <div>
+       		<button ng-click="readNext()" class="btn custom-btn pull-right" style="background-color: transparent; border-color: transparent; color: #558C89; font-size: 14px;">Skip</button>
+        </div>
+	</div>
+	<div class="clearfix"></div>
+	</div>
+	<div  ng-show="doneUpload">
+		<p style="font-style: italic;text-align: center;font-size: 24px;"><span style="font-weight: bold;color: #D9853C;">{{totalAdded}}</span> students were successfully added!</p>
+		<p style="font-size: 80px; color: #558C89; font-weight: lighter; text-align: center;"><i class="fa fa-check-circle-o" aria-hidden="true"></i></p>
+	</div>
+
+<div class="backButton">
+<button data-toggle="tooltip" data-placement="right" title="<?php echo $title ?> Dashboard" class="btn" style="background-color: transparent;" ng-click="goBack()"><i style="font-weight: lighter;font-size: 50px; color: #558C89;" class="fa fa-chevron-left" aria-hidden="true"></i></button>	
+</div>
+
+</body>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/angular-toastr@2/dist/angular-toastr.tpls.js"></script>
+	<script src="js/html2canvas.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+	<script src="js/attendance.js"></script>
+</html>
